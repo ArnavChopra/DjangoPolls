@@ -1,18 +1,18 @@
 """
 Definition of views.
 """
-
+from django.contrib.auth.views import login
 from app.models import Choice, Poll
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,redirect
 from django.template import RequestContext
 from django.utils import timezone
 from django.views.generic import ListView, DetailView
 from os import path
-
+from django.core.urlresolvers import reverse_lazy
 import json
 
 class PollListView(ListView):
@@ -111,3 +111,16 @@ def seed(request):
             choice.save()
 
     return HttpResponseRedirect(reverse('app:home'))
+def custom_login(request,**kwargs):
+    if request.user.is_authenticated():
+        return redirect(reverse_lazy('contact'))
+    else:
+        return redirect(reverse_lazy('login'))
+
+def index(request):
+    if request.user.is_authenticated():
+        return redirect(reverse_lazy('contact'))
+    else:
+        return redirect(reverse_lazy('login'))
+'''def home(request):
+    return render(request, "home.html", {'username':request.user.username})'''

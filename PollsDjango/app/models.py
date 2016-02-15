@@ -9,10 +9,14 @@ class Poll(models.Model):
     """A poll object for use in the application views and repository."""
     text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
+    qrid = models.IntegerField(default=0)
+    courseid = models.IntegerField(default=0)
+    qrstring = models.CharField(max_length=200, default = ' ')
+    is_active = models.IntegerField(default=0)
 
-    def total_votes(self):
+    '''def total_votes(self):
         """Calculates the total number of votes for this poll."""
-        return self.choice_set.aggregate(Sum('votes'))['votes__sum']
+        return self.choice_set.aggregate(Sum('votes'))['votes__sum']'''
 
     def __unicode__(self):
         """Returns a string representation of a poll."""
@@ -23,11 +27,16 @@ class Choice(models.Model):
     poll = models.ForeignKey(Poll)
     text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
+    attend_id = models.IntegerField(default=0)
+    courseid = models.IntegerField(default=0)
+    studentid = models.IntegerField(default=0)
+    # date = models.DateTimeField('date published')
+    is_present = models.IntegerField(default=0)
 
-    def votes_percentage(self):
+    '''def votes_percentage(self):
         """Calculates the percentage of votes for this choice."""
         total = self.poll.total_votes()
-        return self.votes / float(total) * 100 if total > 0 else 0
+        return self.votes / float(total) * 100 if total > 0 else 0'''
 
     def __unicode__(self):
         """Returns a string representation of a choice."""
