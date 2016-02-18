@@ -1,45 +1,37 @@
-<!DOCTYPE html>
+{% extends "app/layout.html" %}
+
+{% block content %}
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Attendance</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+ -->
+  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<div class="container">
-  <h2>Basic Table</h2>
-  <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
-  <table class="table table-hover">
+<h1>Hello {{ user.username }}!</h1>-->
+<br></br>
+ <h2>Attendance Table</h2> 
+  <table class="table table-hover" style="margin-left: -75px">
     <thead>
       <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
+        <th>CourseId</th>
+        {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
+        <th>{{ forloop.counter0|add:1 }}</th>
+        {% endfor %}
       </tr>
+      {% for n in group_name%}
+        <tr> 
+          <td>{{n.name}}</td>
+          {% for j in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  %}
+          <td>p</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
     </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
   </table>
-</div>
-
-</body>
-</html>
+{% endblock %}

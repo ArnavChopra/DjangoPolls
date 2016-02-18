@@ -9,6 +9,7 @@ from app.forms import BootstrapAuthenticationForm
 
 urlpatterns = patterns('',
     url(r'^$', 'app.views.index'),
+    url(r'^(?P<user_id>\d+)/$','app.views.student',name='student'),
     url(r'^$',
         PollListView.as_view(
             queryset=Poll.objects.order_by('-pub_date')[:5],

@@ -1,20 +1,21 @@
 """
 Definition of views.
 """
+from django.contrib.auth.models import User
 from django.contrib.auth.views import login
 from app.models import Choice, Poll
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpRequest, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render,redirect
+from django.shortcuts import get_object_or_404, render,redirect,render_to_response
 from django.template import RequestContext
 from django.utils import timezone
 from django.views.generic import ListView, DetailView
 from os import path
 from django.core.urlresolvers import reverse_lazy
 import json
-
+from django.contrib.auth.models import Group
 class PollListView(ListView):
     """Renders the home page, with a list of all polls."""
     model = Poll
@@ -111,16 +112,31 @@ def seed(request):
             choice.save()
 
     return HttpResponseRedirect(reverse('app:home'))
-def custom_login(request,**kwargs):
+'''def custom_login(request,**kwargs):
     if request.user.is_authenticated():
         return redirect(reverse_lazy('contact'))
     else:
-        return redirect(reverse_lazy('login'))
+        return redirect(reverse_lazy('login'))'''
 
 def index(request):
     if request.user.is_authenticated():
-        return redirect(reverse_lazy('contact'))
+        #return render(request, 'app/student.html',{})
+        return redirect(reverse_lazy('student'))
     else:
         return redirect(reverse_lazy('login'))
+def student(request,**kwargs):
+    """Renders the contact page."""
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/student.html',
+        context_instance = RequestContext(request,
+        {
+            'title': 'Student',
+            'year': datetime.now().year,
+            'group_name': Group.objects.all()
+        })
+        )
+   
 '''def home(request):
     return render(request, "home.html", {'username':request.user.username})'''
