@@ -16,22 +16,18 @@
 <h1>Hello {{ user.username }}!</h1>-->
 <br></br>
  <h2>Attendance Table</h2> 
-  <table class="table table-hover" style="margin-left: -75px">
+  <table class="table table-hover" style="margin-left: -38px">
     <thead>
       <tr>
-        <th>CourseId</th>
         {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
         <th>{{ forloop.counter0|add:1 }}</th>
         {% endfor %}
       </tr>
-      {% for n in group_name%}
-        <tr> 
-          <td>{{n.name}}</td>
+      <tr> 
           {% for j in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  %}
-          <td>p</td>
+          <td>P</td>
           {% endfor %}
         </tr>
-        {% endfor %}
     </thead>
   </table>
 {% endblock %}
