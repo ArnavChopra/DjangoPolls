@@ -16,35 +16,35 @@ from os import path
 from django.core.urlresolvers import reverse_lazy
 import json
 from django.contrib.auth.models import Group
-class PollListView(ListView):
-    """Renders the home page, with a list of all polls."""
-    model = Poll
+# class PollListView(ListView):
+#     """Renders the home page, with a list of all polls."""
+#     model = Poll
 
-    def get_context_data(self, **kwargs):
-        context = super(PollListView, self).get_context_data(**kwargs)
-        context['title'] = 'Polls'
-        context['year'] = datetime.now().year
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super(PollListView, self).get_context_data(**kwargs)
+#         context['title'] = 'Polls'
+#         context['year'] = datetime.now().year
+#         return context
 
-class PollDetailView(DetailView):
-    """Renders the poll details page."""
-    model = Poll
+# class PollDetailView(DetailView):
+#     """Renders the poll details page."""
+#     model = Poll
 
-    def get_context_data(self, **kwargs):
-        context = super(PollDetailView, self).get_context_data(**kwargs)
-        context['title'] = 'Poll'
-        context['year'] = datetime.now().year
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super(PollDetailView, self).get_context_data(**kwargs)
+#         context['title'] = 'Poll'
+#         context['year'] = datetime.now().year
+#         return context
 
-class PollResultsView(DetailView):
-    """Renders the results page."""
-    model = Poll
+# class PollResultsView(DetailView):
+#     """Renders the results page."""
+#     model = Poll
 
-    def get_context_data(self, **kwargs):
-        context = super(PollResultsView, self).get_context_data(**kwargs)
-        context['title'] = 'Results'
-        context['year'] = datetime.now().year
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super(PollResultsView, self).get_context_data(**kwargs)
+#         context['title'] = 'Results'
+#         context['year'] = datetime.now().year
+#         return context
 
 def contact(request):
     """Renders the contact page."""
@@ -125,7 +125,21 @@ def index(request):
     else:
         return redirect(reverse_lazy('login'))
 def student(request,**kwargs):
-    """Renders the contact page."""
+    assert isinstance(request, HttpRequest)
+    user_group=request.user.groups.all()
+    return render(
+        request,
+        'app/studentmain.html',
+        context_instance = RequestContext(request,
+        {
+            'title': 'Student',
+            'year': datetime.now().year,
+            'group_name': Group.objects.all(),
+            'user':User.objects.all(),
+            'user_group':request.user.groups.all()
+        })
+        )
+def students(request,group_id=1):
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -134,9 +148,25 @@ def student(request,**kwargs):
         {
             'title': 'Student',
             'year': datetime.now().year,
-            'group_name': Group.objects.all()
+            'students':Group.objects.get(id=group_id),
+            'user':User.objects.all(),
+            'group_name': Group.objects.all(),
         })
         )
-   
+def prof(request,group_id=1):
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/prof.html',
+        context_instance = RequestContext(request,
+        {
+            'title': 'Student',
+            'year': datetime.now().year,
+            'students':User.objects.filter(groups__id=group_id),
+            'user':User.objects.all(),
+            'group_name': Group.objects.all(),
+            'user_group':request.user.groups.all(),
+        })
+        )
 '''def home(request):
     return render(request, "home.html", {'username':request.user.username})'''

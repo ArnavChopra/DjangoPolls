@@ -1,0 +1,32 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+{% if user.is_active and user.is_staff %}
+    <table class="table table-hover">
+    <thead>
+    <br>
+      <tr><th>The Courses you are Teaching</th></tr>
+    {% for g in user_group %}
+      <tr><td><a href="/student/prof/{{g.id}}/">{{g.name}}</a></td></tr>
+    {% endfor %}
+    </thead>
+    </table>
+{% else %}
+<br></br>
+ <h2>Attendance Table</h2> 
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>CourseId</th>
+        <th>Attendance(in %)</th>
+      </tr>
+      {% for n in user_group%}
+        <tr> 
+          <td><a href="/student/get/{{n.id}}/">{{n.name}}</a></td>
+          <td>85</td>
+        </tr>
+      {% endfor %}
+    </thead>
+  </table>
+{% endif %}
+{% endblock %}

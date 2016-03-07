@@ -1,0 +1,15 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+    <table class="table table-hover">
+    <thead>
+    <br>
+      <tr><th>Enrolled Students in this Course</th></tr>
+    {% for g in students %}
+      {% if not g.is_staff %}
+      <tr><td><a href="/student">{{g.username}}</a></td></tr>
+      {% endif %}
+    {% endfor %}
+    </thead>
+    </table>
+{% endblock %}

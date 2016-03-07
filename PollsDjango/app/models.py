@@ -7,7 +7,6 @@ from django.db.models import Sum
 
 class Poll(models.Model):
     """A poll object for use in the application views and repository."""
-    text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
     qrid = models.IntegerField(default=0)
     courseid = models.IntegerField(default=0)
@@ -24,9 +23,6 @@ class Poll(models.Model):
 
 class Choice(models.Model):
     """A poll choice object for use in the application views and repository."""
-    poll = models.ForeignKey(Poll)
-    text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
     attend_id = models.IntegerField(default=0)
     courseid = models.IntegerField(default=0)
     studentid = models.IntegerField(default=0)
