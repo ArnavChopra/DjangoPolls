@@ -1,6 +1,3 @@
-"""
-Definition of views.
-"""
 from django.contrib.auth.models import User
 from django.contrib.auth.views import login
 from app.models import Choice, Poll
@@ -141,6 +138,9 @@ def student(request,**kwargs):
         )
 def students(request,group_id=1):
     assert isinstance(request, HttpRequest)
+    qrid= Poll.objects.filter(courseid=group_id)
+    user=request.user
+    students=Group.objects.get(id=group_id)
     return render(
         request,
         'app/student.html',
@@ -149,23 +149,32 @@ def students(request,group_id=1):
             'title': 'Student',
             'year': datetime.now().year,
             'students':Group.objects.get(id=group_id),
+            'qrid':Poll.objects.filter(courseid=group_id),
             'user':User.objects.all(),
+            'ans':Choice.objects.filter(is_present=1,studentid=user.id),
             'group_name': Group.objects.all(),
+            'attendance': Choice.objects.all(),
+            'user_group':request.user.groups.all(),
+            'do':Choice.objects.raw('SELECT * FROM app_choice WHERE qr_id in (SELECT id FROM app_poll WHERE courseid = %s) and studentid=%s',[group_id,user.id]),
         })
         )
 def prof(request,group_id=1):
+    qrid= Poll.objects.filter(courseid=group_id)
     assert isinstance(request, HttpRequest)
+    user=request.user
     return render(
         request,
         'app/prof.html',
         context_instance = RequestContext(request,
         {
+            'qrid':Poll.objects.filter(courseid=group_id),
             'title': 'Student',
             'year': datetime.now().year,
             'students':User.objects.filter(groups__id=group_id),
             'user':User.objects.all(),
             'group_name': Group.objects.all(),
             'user_group':request.user.groups.all(),
+            'do':Choice.objects.raw('SELECT * FROM app_choice WHERE qr_id in (SELECT id FROM app_poll WHERE courseid = %s)',[group_id]),
         })
         )
 '''def home(request):

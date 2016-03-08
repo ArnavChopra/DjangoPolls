@@ -1,24 +1,22 @@
 {% extends "app/layout.html" %}
-
+{% load poll_extras %}
 {% block content %}
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Attendance</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
- -->
-  <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
-<body>
-<h1>Hello {{ user.username }}!</h1>-->
 <br></br>
  <h2>Attendance Table</h2> 
   <table class="table table-hover" style="margin-left: -38px">
     <thead>
-      <tr>
+    {% for i in qrid %}
+    <tr>
+      <th>{{i.created_at|date:"DATE_FORMAT"}}</th>
+      {% for j in do %}
+        {% if i.created_at == j.created_at %}
+          <th>P</th>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% endfor %}
+    
+      <!-- <tr>
         {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
         <th>{{ forloop.counter0|add:1 }}</th>
         {% endfor %}
@@ -27,7 +25,7 @@
           {% for j in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  %}
           <td>P</td>
           {% endfor %}
-        </tr>
+        </tr> -->
     </thead>
   </table>
 {% endblock %}

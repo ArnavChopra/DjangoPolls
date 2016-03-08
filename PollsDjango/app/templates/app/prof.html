@@ -6,19 +6,18 @@
     <br>
       <tr>
         <th>Enrolled Students</th>
-        {% for i in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %}
-        <th>{{ forloop.counter0|add:1 }}</th>
+        {% for i in qrid %}
+        <th>{{i.created_at|date:"DATE_FORMAT"}}</th>
         {% endfor %}
       </tr>
     {% for g in students %}
-      {% if not g.is_staff %}
       <tr>
+      {% if not g.is_staff %}
+      
       <td>{{g.username}}</td>
-      {% for j in "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"  %}
-          <td>P</td>
-          {% endfor %}
+      
+      {% endif %}  
       </tr>
-      {% endif %}
     {% endfor %}
     </thead>
     </table>
